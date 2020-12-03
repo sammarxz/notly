@@ -1,8 +1,12 @@
 const mongoose = require('mongoose');
 
+require('dotenv').config();
+
+const mongoUrl = process.env.MONGO_DATABASE_URL;
+
 mongoose.Promise = global.Promise;
 
-mongoose.connect('mongodb://localhost/anotei', {
+mongoose.connect(mongoUrl, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
   useCreateIndex: true,
