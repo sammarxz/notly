@@ -8,9 +8,9 @@ const secret = process.env.JWT_TOKEN;
 
 router.post('/register', async(req, res) => {
   const { name, email, password } = req.body;
-  const user = new User({name, email, password });
 
   try {
+    const user = new User({name, email, password });
     await user.save();
     res.status(200).json(user);
   } catch {
