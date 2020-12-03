@@ -29,3 +29,6 @@ Sessionx.vim
 tags
 # Persistent undo
 [._]*.un~
+
+# Env variables
+.env

@@ -24,5 +24,15 @@ userSchema.pre('save', function (next) {
   }
 });
 
+userSchema.methods.isCorrectPassword = function (password, cb) {
+  bcrypt.compare(password, this.password, function (err, same) {
+    if (err) {
+      cb(err);
+    } else {
+      cb(err, same)
+    }
+  })
+}
+
 module.exports = mongoose.model('User', userSchema);
 
