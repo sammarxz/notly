@@ -42,4 +42,26 @@ router.get('/', withAuth, async(req, res) => {
   }
 });
 
+router.put('/:id', withAuth, async(req, res) => {
+  const { title, body } = req.body;
+  const { id } = req.params;
+
+  try {
+    const note = await Note.findById(id);
+
+    if (isOwner(req.user, note)) {
+      const updatedNote = await Note.findOneAndUpdate(id, 
+        { $set: { title, body } },
+        { upsert: true, "new": true }
+      );
+
+      res.json(updatedNote);
+    } else {
+      res.status(403).json({ error: 'Permission denied' });
+    }
+  } catch(err) {
+    res.status(500).json({ error: 'Error on update note', err });
+  }
+});
+
 module.exports = router;
