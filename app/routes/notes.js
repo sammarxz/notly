@@ -64,4 +64,21 @@ router.put('/:id', withAuth, async(req, res) => {
   }
 });
 
+router.delete('/:id', withAuth, async(req, res) => {
+  const { id } = req.params;
+
+  try {
+    const note = await Note.findById(id); 
+
+    if (isOwner(req.user, note)) {
+      await note.delete();
+      res.status(204).json({ message: 'OK' });
+    } else {
+      res.status(403).json({ error: 'Permission denied' });
+    }
+  } catch {
+    res.status(500).json({ error: 'Error on delete a note', err });
+  }
+});
+
 module.exports = router;
