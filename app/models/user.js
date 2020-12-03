@@ -11,7 +11,7 @@ const userSchema = new mongoose.Schema({
 
 userSchema.pre('save', function (next) {
   if (this.isNew || this.isModified('password')) {
-    bscrypt.hash(this.password, 10,
+    bcrypt.hash(this.password, 10,
       (err, hashedPassword) => {
         if (err) {
           next(err);
