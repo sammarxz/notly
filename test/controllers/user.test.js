@@ -3,8 +3,8 @@ const mongoose = require('mongoose');
 
 let app;
 
-describe('POST /users/register', () => {
-  beforeAll(async () => {
+describe('User model Endpoints', () => {
+  beforeAll(() => {
     app = require('../../app');
   });
 
@@ -28,18 +28,6 @@ describe('POST /users/register', () => {
       .send({ name: 'Fake', email: 'faake@fake.com', password: '1234' });
 
     expect(res.statusCode).toEqual(500);
-  });
-});
-
-
-describe('POST /users/login', () => {
-  beforeAll(async () => {
-    app = require('../../app');
-  });
-
-  afterAll(async () => {
-    await app.close();
-    await mongoose.connection.close();
   });
 
   it('should try to do login with invalid credentials and fail', async () => {
