@@ -23,6 +23,7 @@ const Reset = css`
   h1, h2, h3, h4, h5 {
     font-size: 1rem;
     font-weight: normal;
+    line-height: 1;
   }
 
   a {
