@@ -52,6 +52,7 @@ class Home extends Component {
         {register.map(field => {
           return Object.keys(field).map(key => 
             <Input
+              key={key}
               id={key}
               label={capitalizeFirstLetter(key)}
               type={key === 'name' ? 'text' : key}
@@ -89,6 +90,7 @@ class Home extends Component {
         {login.map(field => {
           return Object.keys(field).map(key => 
             <Input
+              key={key}
               id={key}
               label={capitalizeFirstLetter(key)}
               type={key === 'name' ? 'text' : key}
@@ -172,7 +174,7 @@ class Home extends Component {
                 </Feature>
             </Features>
             <Divider />
-            <CallToAction className="pt--48 ta--center">
+            <CallToAction className="ta--center">
               <h2 className="mb--24 fw--400 lh--1-2">Ready to write your notes? Let's get started!</h2>
               <Button size="big" onClick={this.goToTop}>Go Notes!</Button>
             </CallToAction>
