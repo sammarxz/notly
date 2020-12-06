@@ -7,84 +7,104 @@ import { Container, Header, Hero, Intro, Forms } from './styles';
 
 import { Input, Button } from '../../components';
 
+import { capitalizeFirstLetter } from '../../utils';
+
 class Home extends Component {
   state = {
     formChoice: 'register',
+    register: [{
+      name: '',
+      email: '',
+      password: ''
+    }],
+    login: [{
+      email: '',
+      password: ''
+    }]
   }
 
-  renderRegister = () => (
-    <form id="register">
-      <Input 
-        id="name"
-        label="Name"
-        type="text"
-        className='mb--16'
-      />
-      <Input 
-        id="email"
-        label="Email"
-        type="email"
-        className='mb--16'
-      />
-      <Input 
-        id="password"
-        label="Password"
-        type="password"
-        className='mb--16'
-      />
-      <div className="d--flex ai--center jc--space-between">
-        <p className="m--0">
-          Have an account?
-          <Button 
-            size="small" 
-            color="base-white" 
-            textColor="blue-04"
-            onClick={() => this.setState({ formChoice: 'login' })}
-            className="d--block like-link"
-          >
-            Sign In
-          </Button>
-        </p>
-        <Button type="submit" size="big">
-          Register
-        </Button>
-      </div>
-    </form>
-  );
+  handleChange = (id, value, type) => {
+    this.setState((prevState) => ({
+      [type]: [{
+        ...prevState[type][0], 
+        [id]: value
+      }]
+    }));
+  }
 
-  renderLogin = () => (
-    <form id="login">
-      <Input 
-        id="email"
-        label="Email"
-        type="email"
-        className='mb--16'
-      />
-      <Input 
-        id="password"
-        label="Password"
-        type="password"
-        className='mb--16'
-      />
-      <div className="d--flex ai--center jc--space-between">
-        <p className="m--0">
-          Don't have an account?
-          <Button 
-            size="small" 
-            color="base-white" 
-            textColor="blue-04"
-            onClick={() => this.setState({ formChoice: 'register' })}
-            className="d--block like-link"
-          >
-            Sign Up
+  renderRegister = () => {
+    const { register } = this.state;
+
+    return (
+      <form id="register">
+        {register.map(field => {
+          return Object.keys(field).map(key => 
+            <Input
+              id={key}
+              label={capitalizeFirstLetter(key)}
+              type={key === 'name' ? 'text' : key}
+              className="mb--16"
+              value={field[key]}
+              onChange={(id, value) => this.handleChange(id, value, 'register') }
+            />
+        )})}
+        <div className="d--flex ai--center jc--space-between">
+          <p className="m--0">
+            Have an account?
+            <Button 
+              size="small" 
+              color="base-white" 
+              textColor="blue-04"
+              onClick={() => this.setState({ formChoice: 'login' })}
+              className="d--block like-link"
+            >
+              Sign In
+            </Button>
+          </p>
+          <Button type="submit" size="big">
+            Register
           </Button>
-        </p>
-        <Button type="submit" size="big">
-          Log in
-        </Button>
-      </div>
-    </form>
-  );
+        </div>
+      </form>
+    );
+  };
+
+  renderLogin = () => {
+    const { login } = this.state;
+
+    return (
+      <form id="login">
+        {login.map(field => {
+          return Object.keys(field).map(key => 
+            <Input
+              id={key}
+              label={capitalizeFirstLetter(key)}
+              type={key === 'name' ? 'text' : key}
+              className="mb--16"
+              value={field[key]}
+              onChange={(id, value) => this.handleChange(id, value, 'login') }
+            />
+        )})}
+        <div className="d--flex ai--center jc--space-between">
+          <p className="m--0">
+            Don't have an account?
+            <Button 
+              size="small" 
+              color="base-white" 
+              textColor="blue-04"
+              onClick={() => this.setState({ formChoice: 'register' })}
+              className="d--block like-link"
+            >
+              Sign Up
+            </Button>
+          </p>
+          <Button type="submit" size="big">
+            Log in
+          </Button>
+        </div>
+      </form>
+    );
+  };
 
   render() {
     const { formChoice } = this.state;

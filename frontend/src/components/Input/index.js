@@ -12,7 +12,6 @@ class Input extends Component {
       focussed: (props.locked && props.focussed) || false,
       value: props.value || '',
       error: props.error || '',
-      label: props.label || '',
       showPassword: false,
     }
   }
@@ -38,7 +37,7 @@ class Input extends Component {
   renderShowPassword = () => {
     const { showPassword } = this.state;
     
-    if (showPassword) {
+    if (!showPassword) {
       return (
         <button type="button" onClick={this.toggleShowPassword}>
           <FiEye className="c--grey-06"/>
@@ -54,14 +53,15 @@ class Input extends Component {
   }
 
   render() {
-    const { focussed, value, error, label, showPassword } = this.state;
-    const { id, type, locked, className } = this.props;
+    const { focussed, value, error, showPassword } = this.state;
+    const { id, type, locked, className, label } = this.props;
 
     const wrapperClassName = `${className} ${(locked ? focussed : focussed || value) && 'focussed'} ${locked && !focussed && 'locked'}`;
 
     return (
       <Wrapper className={wrapperClassName}>
         <Field
+          name={id}
           id={id}
           type={showPassword ? 'text' : type}
           value={value}
