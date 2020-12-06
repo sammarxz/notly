@@ -42,10 +42,6 @@ const Intro = styled.div`
 `;
 
 const Forms = styled.div`
-  form {
-    opacity: 0;
-  }
-
   @media (min-width: 676px) {
     width: 50%;
     flex-grow: 1;
