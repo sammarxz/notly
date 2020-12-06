@@ -97,6 +97,22 @@ const Reset = css`
   table {
     border-collapse: collapse;
   }
+
+  ::-webkit-input-placeholder {
+    color: var(--color-grey-06);
+  }
+
+  ::-moz-placeholder { 
+    color: var(--color-grey-06);
+  }
+
+  :-ms-input-placeholder { 
+    color: var(--color-grey-06);
+  }
+
+  :-moz-placeholder {
+    color: var(--color-grey-06);
+  }
 `
 
 export default Reset;
