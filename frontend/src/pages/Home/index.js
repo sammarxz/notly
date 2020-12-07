@@ -1,11 +1,11 @@
-import  React, { Component } from 'react';
+import React, { Component } from 'react';
 import { Link, Redirect } from 'react-router-dom';
 
 import Logo from '../../assets/logo.svg';
 
-import { 
-  Container, 
-  Header, 
+import {
+  Container,
+  Header,
   Hero,
   Intro,
   Forms,
@@ -14,41 +14,81 @@ import {
   Feature,
   CallToAction,
   Divider,
-  Footer
+  Footer,
 } from './styles';
 
 import { Input, Button } from '../../components';
 
 import { capitalizeFirstLetter } from '../../utils';
 
-import UsersService from "../../services/users";
+import UsersService from '../../services/users';
+import { isAuthenticated } from '../../services/auth';
 
 class Home extends Component {
-  state = {
-    formChoice: 'register',
-    register: [{
-      name: '',
-      email: '',
-      password: ''
-    }],
-    login: [{
-      email: '',
-      password: ''
-    }],
-    error: false,
-    redirectToNotes: false,
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      formChoice: 'register',
+      register: [{
+        name: '',
+        email: '',
+        password: '',
+      }],
+      login: [{
+        email: '',
+        password: '',
+      }],
+      error: false,
+      redirectToNotes: false,
+    };
   }
 
-  handleChange = (id, value, type) => {
+  handleChange(id, value, type) {
     this.setState((prevState) => ({
       [type]: [{
-        ...prevState[type][0], 
-        [id]: value
-      }]
+        ...prevState[type][0],
+        [id]: value,
+      }],
     }));
   }
 
-  isValid = (data, type) => {
+  async handleSubmit(e, type) {
+    e.preventDefault();
+
+    const dataToPass = this.state[type];
+
+    if (this.isValid(dataToPass[0], type)) {
+      try {
+        await UsersService[type](...dataToPass);
+        if (type === 'register') {
+          this.setState({
+            formChoice: 'login',
+          });
+          return;
+        }
+
+        this.setState({
+          redirectToNotes: true,
+        });
+      } catch (error) {
+        this.setState({
+          error: {
+            message: 'Invalid Email or password',
+          },
+        });
+        return;
+      }
+    }
+
+    this.setState({
+      error: {
+        message: 'Please fill in all fields',
+      },
+    });
+  }
+
+  isValid(data, type) {
     let response = false;
 
     switch (type) {
@@ -65,85 +105,14 @@ class Home extends Component {
     }
 
     return response;
-  } 
+  }
 
-  handleSubmit = async (e, type) => {
-    e.preventDefault();
+  goToTop() {
+    document.body.scrollTop = 0;
+    document.documentElement.scrollTop = 0;
+  }
 
-    const dataToPass = this.state[type];
-
-    if (this.isValid(dataToPass[0], type)) {
-      try {
-        const user = await UsersService[type](...dataToPass);
-        if (type === 'register') {
-          this.setState({
-            formChoice: 'login'
-          });
-          return;
-        }
-        
-        this.setState({
-          redirectToNotes: true
-        });
-      } catch (error) {
-        this.setState({
-          error: {
-            message: 'Invalid Email or password'
-          }
-        });
-        return;
-      }
-    }
-
-    this.setState({
-      error: {
-        message: 'Please fill in all fields'
-      }
-    });
-  } 
-
-  renderRegister = () => {
-    const { register, error } = this.state;
-
-    return (
-      <form id="register" onSubmit={(e) => this.handleSubmit(e, 'register')} method="POST">
-        {error && (
-          <p className="c--red">{error.message}</p>
-        )}
-        {register.map(field => {
-          return Object.keys(field).map(key => 
-            <Input
-              key={key}
-              id={key}
-              label={capitalizeFirstLetter(key)}
-              type={key === 'name' ? 'text' : key}
-              className="mb--16"
-              value={field[key]}
-              onChange={(id, value) => this.handleChange(id, value, 'register') }
-            />
-        )})}
-        <div className="d--flex ai--center jc--space-between">
-          <p className="m--0 c--grey-07">
-            Have an account?
-            <Button 
-              size="small" 
-              color="base-white" 
-              textColor="blue-04"
-              onClick={() => this.setState({ formChoice: 'login' })}
-              className="d--block like-link"
-            >
-              Sign In
-            </Button>
-          </p>
-          <Button type="submit" size="big">
-            Register
-          </Button>
-        </div>
-      </form>
-    );
-  };
-
-  renderLogin = () => {
+  renderLogin() {
     const { login, error } = this.state;
 
     return (
@@ -151,24 +120,23 @@ class Home extends Component {
         {error && (
           <p className="c--red">{error.message}</p>
         )}
-        {login.map(field => {
-          return Object.keys(field).map(key => 
-            <Input
-              key={key}
-              id={key}
-              label={capitalizeFirstLetter(key)}
-              type={key === 'name' ? 'text' : key}
-              className="mb--16"
-              value={field[key]}
-              onChange={(id, value) => this.handleChange(id, value, 'login') }
-            />
-        )})}
+        {login.map((field) => Object.keys(field).map((key) => (
+          <Input
+            key={key}
+            id={key}
+            label={capitalizeFirstLetter(key)}
+            type={key === 'name' ? 'text' : key}
+            className="mb--16"
+            value={field[key]}
+            onChange={(id, value) => this.handleChange(id, value, 'login')}
+          />
+        )))}
         <div className="d--flex ai--center jc--space-between">
           <p className="m--0 c--grey-07">
             Don't have an account?
-            <Button 
-              size="small" 
-              color="base-white" 
+            <Button
+              size="small"
+              color="base-white"
               textColor="blue-04"
               onClick={() => this.setState({ formChoice: 'register' })}
               className="d--block like-link"
@@ -182,18 +150,53 @@ class Home extends Component {
         </div>
       </form>
     );
-  };
+  }
 
-  goToTop = () => {
-    document.body.scrollTop = 0;
-    document.documentElement.scrollTop = 0;
+  renderRegister() {
+    const { register, error } = this.state;
+
+    return (
+      <form id="register" onSubmit={(e) => this.handleSubmit(e, 'register')} method="POST">
+        {error && (
+          <p className="c--red">{error.message}</p>
+        )}
+        {register.map((field) => Object.keys(field).map((key) => (
+          <Input
+            key={key}
+            id={key}
+            label={capitalizeFirstLetter(key)}
+            type={key === 'name' ? 'text' : key}
+            className="mb--16"
+            value={field[key]}
+            onChange={(id, value) => this.handleChange(id, value, 'register')}
+          />
+        )))}
+        <div className="d--flex ai--center jc--space-between">
+          <p className="m--0 c--grey-07">
+            Have an account?
+            <Button
+              size="small"
+              color="base-white"
+              textColor="blue-04"
+              onClick={() => this.setState({ formChoice: 'login' })}
+              className="d--block like-link"
+            >
+              Sign In
+            </Button>
+          </p>
+          <Button type="submit" size="big">
+            Register
+          </Button>
+        </div>
+      </form>
+    );
   }
 
   render() {
     const { formChoice, redirectToNotes } = this.state;
 
-    if (redirectToNotes) {
-      return <Redirect to="/notes" />
+    if (redirectToNotes || isAuthenticated()) {
+      return <Redirect to="/notes" />;
     }
 
     return (
@@ -224,22 +227,36 @@ class Home extends Component {
         <section className="mt--48">
           <Container>
             <Features>
-                <Feature>
-                  <h1 className="mb--16">Focus on write</h1>
-                  <p className="c--grey-07">Focus is the key to good writing. <strong>Notly</strong> helps you stay on flow.</p>
-                </Feature>
-                <Feature>
-                  <h1 className="mb--16">Simple, but essential</h1>
-                  <p className="c--grey-07"><strong>Notly</strong> have a simple text editor, only the essential tools.</p>
-                </Feature>
-                <Feature>
-                  <h1 className="mb--16">Notes Everywhere</h1>
-                  <p className="c--grey-07">Keep your notes close. Notes on your smartphone or PC.</p>
-                </Feature>
-                <Feature>
-                  <h1 className="mb--16">Keep Sync</h1>
-                  <p className="c--grey-07">Never lost an note. <strong>Notly</strong> keep your notes saved and secure.</p>
-                </Feature>
+              <Feature>
+                <h1 className="mb--16">Focus on write</h1>
+                <p className="c--grey-07">
+                  Focus is the key to good writing.
+                  <strong>Notly</strong>
+                  {' '}
+                  helps you stay on flow.
+                </p>
+              </Feature>
+              <Feature>
+                <h1 className="mb--16">Simple, but essential</h1>
+                <p className="c--grey-07">
+                  <strong>Notly</strong>
+                  {' '}
+                  have a simple text editor, only the essential tools.
+                </p>
+              </Feature>
+              <Feature>
+                <h1 className="mb--16">Notes Everywhere</h1>
+                <p className="c--grey-07">Keep your notes close. Notes on your smartphone or PC.</p>
+              </Feature>
+              <Feature>
+                <h1 className="mb--16">Keep Sync</h1>
+                <p className="c--grey-07">
+                  Never lost an note.
+                  <strong>Notly</strong>
+                  {' '}
+                  keep your notes saved and secure.
+                </p>
+              </Feature>
             </Features>
             <Divider />
             <CallToAction className="ta--center">
@@ -249,9 +266,13 @@ class Home extends Component {
           </Container>
         </section>
         <Container size="large">
-          <Footer className='ai--center jc--space-between pt--16'>
+          <Footer className="ai--center jc--space-between pt--16">
             <p>notly.co &copy; 2021 - All rights reserved.</p>
-            <p>Created by <a href="https://sammarxz.com" className="c--blue-04" target="_blank"rel="noreferrer">@sammarxz</a>.</p>
+            <p>
+              Created by
+              <a href="https://sammarxz.com" className="c--blue-04" target="_blank" rel="noreferrer">@sammarxz</a>
+              .
+            </p>
           </Footer>
         </Container>
       </>

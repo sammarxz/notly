@@ -13,7 +13,7 @@ class Input extends Component {
       value: props.value || '',
       error: props.error || '',
       showPassword: false,
-    }
+    };
   }
 
   onChange = (e) => {
@@ -28,13 +28,13 @@ class Input extends Component {
     return this.props.onChange(id, value);
   }
 
-  toggleShowPassword = () => {
+  toggleShowPassword() {
     this.setState((prevState) => ({
       showPassword: !prevState.showPassword
     }));
   }
 
-  renderShowPassword = () => {
+  renderShowPassword() {
     const { showPassword } = this.state;
     
     if (!showPassword) {
@@ -82,6 +82,7 @@ class Input extends Component {
 }
 
 Input.defaultProps = {
+  type: 'text',
   locked: false,
   focussed: false,
   value: '',
@@ -92,6 +93,7 @@ Input.defaultProps = {
 };
 
 Input.propTypes = {
+  type: PropTypes.string,
   id: PropTypes.string.isRequired,
   locked: PropTypes.bool,
   focussed: PropTypes.bool,
