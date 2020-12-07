@@ -3,24 +3,24 @@ import { shadeColor } from '../../utils';
 
 const hoverColor = (colorName, percentage) => {
   const colorValue = getComputedStyle(document.documentElement).getPropertyValue(`--color-${colorName}`);
-  const hoverColor = shadeColor(colorValue, percentage);
-  return hoverColor;
-}
+  const hexColor = shadeColor(colorValue, percentage);
+  return hexColor;
+};
 
 const Btn = styled.button`
-  color: var(--color-${props => props.textColor});
-  background-color: var(--color-${props => props.color});
+  color: var(--color-${(props) => props.textColor});
+  background-color: var(--color-${(props) => props.color});
   border-radius: 4px;
   font-weight: 700;
   transition: background-color .3s ease, transform .3s ease;
 
   &:not(.like-link):hover {
-    background-color: ${props => hoverColor(props.color, -13)}; 
+    background-color: ${(props) => hoverColor(props.color, -13)}; 
     transform: scale(1.01);
   }
 
   &:not(.like-link):active {
-    background-color: ${props => hoverColor(props.color, -20)}; 
+    background-color: ${(props) => hoverColor(props.color, -20)}; 
     color: #fff;
     transform: scale(.98);
   }
@@ -45,7 +45,7 @@ const Btn = styled.button`
     transition: color .3s ease;
 
     &:hover {
-      color: ${props => hoverColor(props.textColor, -13)};
+      color: ${(props) => hoverColor(props.textColor, -13)};
     }
   }
 `;

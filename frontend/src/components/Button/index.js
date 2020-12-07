@@ -3,7 +3,9 @@ import PropTypes from 'prop-types';
 
 import { Btn } from './styles';
 
-const Button = ({ className, type, color, textColor, size, disabled, onClick, children }) => (
+const Button = ({
+  className, type, color, textColor, size, disabled, onClick, children,
+}) => (
   <Btn
     className={`${className} is--${size}`}
     onClick={onClick}
@@ -34,7 +36,7 @@ Button.propTypes = {
   size: PropTypes.string,
   disabled: PropTypes.bool,
   onClick: PropTypes.func.isRequired,
-  children: PropTypes.node.isRequired
+  children: PropTypes.node.isRequired,
 };
 
 export { Button };

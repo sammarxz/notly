@@ -1,4 +1,4 @@
-import { css } from 'styled-components'
+import { css } from 'styled-components';
 
 const Spaces = css`
   .m--0 {
@@ -20,6 +20,6 @@ const Spaces = css`
       }
     `)}
   `)}
-`
+`;
 
-export { Spaces }
+export { Spaces };

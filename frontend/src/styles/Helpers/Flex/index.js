@@ -1,4 +1,4 @@
-import { css } from 'styled-components'
+import { css } from 'styled-components';
 
 const Flex = css`
   .d--flex {
@@ -20,6 +20,6 @@ const Flex = css`
   .fw--wrap {
     flex-wrap: flex-wrap;
   }
-`
+`;
 
-export { Flex }
+export { Flex };

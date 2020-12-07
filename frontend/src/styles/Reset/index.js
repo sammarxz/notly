@@ -113,6 +113,6 @@ const Reset = css`
   :-moz-placeholder {
     color: var(--color-grey-06);
   }
-`
+`;
 
 export default Reset;

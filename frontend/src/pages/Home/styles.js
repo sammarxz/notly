@@ -9,14 +9,14 @@ const Container = styled.div`
   margin: 0 auto;
   padding: 0 5%;
 
-  ${props => props.size === 'large' && containerLg}
+  ${(props) => props.size === 'large' && containerLg}
 `;
 
 const Header = styled.div`
   padding-top: 5%;
 
   @media (min-width: 676px) {
-    padding-top: 100px;
+    padding-top: 80px;
   }
 `;
 
@@ -131,7 +131,6 @@ const CallToAction = styled.div`
   }
 `;
 
-
 const Footer = styled.footer`
   border-top: 1px solid var(--color-grey-03);
   text-align: center;
@@ -142,16 +141,16 @@ const Footer = styled.footer`
   }
 `;
 
-export { 
-  Container, 
-  Header, 
-  Hero, 
-  Intro, 
+export {
+  Container,
+  Header,
+  Hero,
+  Intro,
   Forms,
   PreviewImage,
   Features,
   Feature,
   CallToAction,
   Divider,
-  Footer
+  Footer,
 };
