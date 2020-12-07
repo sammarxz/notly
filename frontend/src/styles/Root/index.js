@@ -30,6 +30,10 @@ const Root = css`
     --color-grey-07: #575757;
     --color-grey-08: #1f1f1f;
 
+    --color-red: #d1453b;
+
+    --color-green: #058527;
+
     --color-base-white: #fff;
     --color-base-black: #000;
   }

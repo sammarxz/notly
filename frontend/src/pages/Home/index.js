@@ -1,5 +1,5 @@
 import  React, { Component } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 
 import Logo from '../../assets/logo.svg';
 
@@ -21,6 +21,8 @@ import { Input, Button } from '../../components';
 
 import { capitalizeFirstLetter } from '../../utils';
 
+import UsersService from "../../services/users";
+
 class Home extends Component {
   state = {
     formChoice: 'register',
@@ -32,7 +34,9 @@ class Home extends Component {
     login: [{
       email: '',
       password: ''
-    }]
+    }],
+    error: false,
+    redirectToNotes: false,
   }
 
   handleChange = (id, value, type) => {
@@ -44,11 +48,68 @@ class Home extends Component {
     }));
   }
 
+  isValid = (data, type) => {
+    let response = false;
+
+    switch (type) {
+      case 'register':
+        if (data.name && data.email && data.password) {
+          response = true;
+        }
+        break;
+      default:
+        if (data.email && data.password) {
+          response = true;
+        }
+        break;
+    }
+
+    return response;
+  } 
+
+  handleSubmit = async (e, type) => {
+    e.preventDefault();
+
+    const dataToPass = this.state[type];
+
+    if (this.isValid(dataToPass[0], type)) {
+      try {
+        const user = await UsersService[type](...dataToPass);
+        if (type === 'register') {
+          this.setState({
+            formChoice: 'login'
+          });
+          return;
+        }
+        
+        this.setState({
+          redirectToNotes: true
+        });
+      } catch (error) {
+        this.setState({
+          error: {
+            message: 'Invalid Email or password'
+          }
+        });
+        return;
+      }
+    }
+
+    this.setState({
+      error: {
+        message: 'Please fill in all fields'
+      }
+    });
+  } 
+
   renderRegister = () => {
-    const { register } = this.state;
+    const { register, error } = this.state;
 
     return (
-      <form id="register">
+      <form id="register" onSubmit={(e) => this.handleSubmit(e, 'register')} method="POST">
+        {error && (
+          <p className="c--red">{error.message}</p>
+        )}
         {register.map(field => {
           return Object.keys(field).map(key => 
             <Input
@@ -83,10 +144,13 @@ class Home extends Component {
   };
 
   renderLogin = () => {
-    const { login } = this.state;
+    const { login, error } = this.state;
 
     return (
-      <form id="login">
+      <form id="login" onSubmit={(e) => this.handleSubmit(e, 'login')} method="POST">
+        {error && (
+          <p className="c--red">{error.message}</p>
+        )}
         {login.map(field => {
           return Object.keys(field).map(key => 
             <Input
@@ -126,7 +190,11 @@ class Home extends Component {
   }
 
   render() {
-    const { formChoice } = this.state;
+    const { formChoice, redirectToNotes } = this.state;
+
+    if (redirectToNotes) {
+      return <Redirect to="/notes" />
+    }
 
     return (
       <>

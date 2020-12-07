@@ -5,7 +5,7 @@ var cors = require('cors');
 require('./config/database');
 
 var corsOptions = {
-  origin: 'http://localhost:8000',
+  origin: 'http://localhost:3000',
   optionsSuccessStatus: 200
 };
 
