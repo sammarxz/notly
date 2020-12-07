@@ -28,7 +28,7 @@ class Input extends Component {
     return this.props.onChange(id, value);
   }
 
-  toggleShowPassword() {
+  toggleShowPassword = () => {
     this.setState((prevState) => ({
       showPassword: !prevState.showPassword
     }));

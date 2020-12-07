@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Link, Redirect } from 'react-router-dom';
+import { RiCloseLine } from 'react-icons/ri';
 
 import Logo from '../../assets/logo.svg';
 
@@ -64,6 +65,7 @@ class Home extends Component {
         if (type === 'register') {
           this.setState({
             formChoice: 'login',
+            login: [...dataToPass]
           });
           return;
         }
@@ -118,7 +120,12 @@ class Home extends Component {
     return (
       <form id="login" onSubmit={(e) => this.handleSubmit(e, 'login')} method="POST">
         {error && (
-          <p className="c--red">{error.message}</p>
+          <div className="d--flex ai--center jc--space-between mb--16">
+            <p className="c--red m--0">{error.message}</p>
+            <button type="button" onClick={() => this.setState({ error: false })}>
+              <RiCloseLine className="c--red" />
+            </button>
+          </div>
         )}
         {login.map((field) => Object.keys(field).map((key) => (
           <Input
@@ -128,6 +135,7 @@ class Home extends Component {
             type={key === 'name' ? 'text' : key}
             className="mb--16"
             value={field[key]}
+            error={error}
             onChange={(id, value) => this.handleChange(id, value, 'login')}
           />
         )))}
@@ -158,7 +166,12 @@ class Home extends Component {
     return (
       <form id="register" onSubmit={(e) => this.handleSubmit(e, 'register')} method="POST">
         {error && (
-          <p className="c--red">{error.message}</p>
+          <div className="d--flex ai--center jc--space-between mb--16">
+            <p className="c--red m--0">{error.message}</p>
+            <button type="button" onClick={() => this.setState({ error: false })}>
+              <RiCloseLine className="c--red" />
+            </button>
+          </div>
         )}
         {register.map((field) => Object.keys(field).map((key) => (
           <Input
