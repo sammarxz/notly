@@ -1,10 +1,10 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import Gravatar from 'react-gravatar';
+// import Gravatar from 'react-gravatar';
 import { RiLogoutCircleLine, RiAddFill } from 'react-icons/ri';
 
-import { Navbar, Avatar } from './styles';
+import { Navbar } from './styles';
 
 import Logo from '../../assets/logo.svg';
 
@@ -20,9 +20,9 @@ const Nav = ({user: {email}, onLogout}) => {
         </button>
       </div>
       <div className="d--flex ai--center fd--column">
-        <Avatar>
+        {/* <Avatar>
           <Gravatar email={email} size={36} />
-        </Avatar>
+        </Avatar> */}
         <button type="button" className="mt--32" onClick={onLogout}>
           <RiLogoutCircleLine size="24px" className="c--red" />
         </button>
