@@ -20,6 +20,14 @@ const Flex = css`
   .fw--wrap {
     flex-wrap: flex-wrap;
   }
+
+  .fd--column {
+    flex-direction: column;
+  }
+
+  .fd--row {
+    flex-direction: row;
+  }
 `;
 
 export { Flex };

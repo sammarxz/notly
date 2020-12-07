@@ -12,9 +12,9 @@ const UsersService = {
     localStorage.setItem('user', JSON.stringify(user));
     localStorage.setItem('token', response.data.token);
   },
-  lougout: () => {
-    localStorage.removeItem('user');
-    localStorage.removeItem('token');
+  logout: () => {
+    localStorage.removeItem('user', null);
+    localStorage.removeItem('token', null);
   },
 };
 

@@ -204,7 +204,7 @@ class Home extends Component {
         <Container>
           <Header id="form" className="mb--48">
             <Link to="/" className="mb--24">
-              <img src={Logo} alt="Logo anoite.co" />
+              <img src={Logo} alt="Logo Notly.co" />
             </Link>
             <Hero>
               <Intro>
