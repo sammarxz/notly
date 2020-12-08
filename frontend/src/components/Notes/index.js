@@ -19,7 +19,7 @@ const Notes = ({ notes, currentNote, selectNote }) => (
             </h2>
             <div className="d--flex ai--center jc--space-between">
               <p className="m--0 fs--small">
-                {note.body.replace(/(<([^>]+)>)/ig, '').substring(0, 25)}
+                {note.body.replace(/(<([^>]+)>)/ig, '').substring(0, 20)}...
               </p>
               <p className="m--0 fs--small">
                 {Moment(note.created_at).fromNow()}

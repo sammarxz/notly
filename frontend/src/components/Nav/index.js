@@ -8,14 +8,14 @@ import { Navbar } from './styles';
 
 import Logo from '../../assets/logo.svg';
 
-const Nav = ({user: {email}, onLogout}) => {
+const Nav = ({user: {email}, onLogout, onCreateNote}) => {
   return (
     <Navbar className="d--flex jc--space-between ai--center fd--column">
       <div className="d--flex ai--center fd--column">
         <Link to="/notes">
           <img src={Logo} alt="Logo Notly.co" className="logo" />
         </Link>
-        <button className="mt--32">
+        <button className="mt--32" onClick={() => onCreateNote()}>
           <RiAddFill size="32px" className="c--blue-04" />
         </button>
       </div>
@@ -34,6 +34,7 @@ const Nav = ({user: {email}, onLogout}) => {
 Nav.propTypes = {
   user: PropTypes.object.isRequired,
   onLogout: PropTypes.func.isRequired,
+  onCreateNote: PropTypes.func.isRequired,
 };
 
 export { Nav }

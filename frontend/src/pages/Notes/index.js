@@ -49,6 +49,11 @@ class Notes extends Component {
     });
   }
 
+  createNote = async() => {
+    await NotesServices.create();
+    this.fetchNotes();
+  } 
+
   logOut = async () => {
     await UsersService.logout();
     this.setState({
@@ -65,7 +70,7 @@ class Notes extends Component {
 
     return (
       <Container>
-        <Nav user={user} onLogout={this.logOut}/>
+        <Nav user={user} onLogout={this.logOut} onCreateNote={this.createNote} />
         <NotesWrapper>
           <SearchNote className="mb--32" />
           <N notes={notes} currentNote={currentNote} selectNote={this.selectNote} />
