@@ -5,9 +5,14 @@ import { getUser } from '../../services/auth';
 import UsersService from '../../services/users';
 import NotesServices from '../../services/notes';
 
-import { Container, NotesWrapper } from './styles';
+import { Container, NotesWrapper, TextEditorWrapper } from './styles';
 
-import { Nav, Notes as N, SearchNote } from '../../components';
+import { 
+  Nav,
+  SearchNote,
+  Notes as N,
+  TextEditor,
+} from '../../components';
 
 class Notes extends Component {
   constructor(props) {
@@ -90,6 +95,9 @@ class Notes extends Component {
           <SearchNote className="mb--32" />
           <N notes={notes} currentNote={currentNote} selectNote={this.selectNote} />
         </NotesWrapper>
+        <TextEditorWrapper>
+          <TextEditor note={currentNote} />
+        </TextEditorWrapper>
       </Container>
     )
   }

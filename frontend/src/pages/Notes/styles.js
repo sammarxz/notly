@@ -7,8 +7,11 @@ const Container = styled.main`
 `;
 
 const NotesWrapper = styled.div`
+  position: fixed;
   margin-left: 60px;
   margin-top: 20px;
+  max-height: 100vh;
+  top: 0;
 
   @media (min-width: 676px) {
     margin-left: 90px;
@@ -17,4 +20,13 @@ const NotesWrapper = styled.div`
   }
 `;
 
-export { Container, NotesWrapper };
+const TextEditorWrapper = styled.div`
+  @media (min-width: 676px) {
+    flex: 1;
+    min-height: 80vh;
+    margin-top: 40px;
+    margin-left: 60px;
+  }
+`;
+
+export { Container, NotesWrapper, TextEditorWrapper };
