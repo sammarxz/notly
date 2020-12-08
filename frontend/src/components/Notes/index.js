@@ -15,11 +15,11 @@ const Notes = ({ notes, currentNote, onSelectNote }) => (
             onClick={() => onSelectNote(note._id)}
           >
             <h2 className="fs--medium mb--4">
-              {note.title.replace(/(<([^>]+)>)/ig, '').substring(0, 15)}
+              {note.title.replace(/(<([^>]+)>)/ig, '').substring(0, 15)}...
             </h2>
             <div className="d--flex ai--center jc--space-between">
               <p className="m--0 fs--small">
-                {note.body.replace(/(<([^>]+)>)/ig, '').substring(0, 20)}...
+                {note.body.replace(/(<([^>]+)>)/ig, '').substring(0, 18)}...
               </p>
               <p className="m--0 fs--small">
                 {Moment(note.created_at).fromNow()}

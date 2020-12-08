@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
+import { RiDeleteBinLine } from 'react-icons/ri';
 
 import { getUser } from '../../services/auth';
 import UsersService from '../../services/users';
 import NotesServices from '../../services/notes';
 
-import { Container, NotesWrapper, TextEditorWrapper } from './styles';
+import { Container, NotesWrapper, TextEditorWrapper, DeleteNoteWrapper } from './styles';
 
 import { 
   Nav,
@@ -25,7 +26,8 @@ class Notes extends Component {
         title: '',
         body: '',
         id: ''
-      }
+      },
+      showNotes: false,
     }
   }
 
@@ -54,7 +56,8 @@ class Notes extends Component {
     });
 
     this.setState({
-      currentNote: note
+      currentNote: note,
+      showNotes: false
     });
   }
 
@@ -95,8 +98,14 @@ class Notes extends Component {
     });
   }
 
+  toggleShowNotes = () => {
+    this.setState((prevState)=> ({
+      showNotes: !prevState.showNotes
+    }));
+  }
+
   render() {
-    const { user, logout, notes, currentNote } = this.state;
+    const { user, logout, notes, currentNote, showNotes } = this.state;
 
     if (logout) {
       return <Redirect to={{ pathname: '/' }} />
@@ -104,13 +113,26 @@ class Notes extends Component {
 
     return (
       <Container>
-        <Nav user={user} onLogout={this.logOut} onCreateNote={this.createNote} />
-        <NotesWrapper>
+        <Nav 
+          user={user} 
+          onLogout={this.logOut} onCreateNote={this.createNote} 
+          onShowNotes={this.toggleShowNotes}
+        />
+        <NotesWrapper className={showNotes && 'active'}>
           <SearchNote className="mb--32" />
-          <N notes={notes} currentNote={currentNote} onSelectNote={this.selectNote} />
+          <N 
+            notes={notes} 
+            currentNote={currentNote} 
+            onSelectNote={this.selectNote}
+          />
         </NotesWrapper>
-        <TextEditorWrapper>
+        <TextEditorWrapper className="p--relative">
           <TextEditor note={currentNote} onUpdateNote={this.updateNote} />
+          <DeleteNoteWrapper className="p--absolute">
+            <button onClick={this.deleteNote}>
+              <RiDeleteBinLine size="22px" className="c--red" />
+            </button>
+          </DeleteNoteWrapper>
         </TextEditorWrapper>
       </Container>
     )

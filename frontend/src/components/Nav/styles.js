@@ -9,6 +9,10 @@ const Navbar = styled.nav`
 
   @media (min-width: 676px) {
     padding: 40px 0;
+
+    .mobile-notes {
+      display: none;
+    }
   }
 `;
 

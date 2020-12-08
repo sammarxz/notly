@@ -56,7 +56,6 @@ class Home extends Component {
 
   async handleSubmit(e, type) {
     e.preventDefault();
-
     const dataToPass = this.state[type];
 
     if (this.isValid(dataToPass[0], type)) {
@@ -65,7 +64,15 @@ class Home extends Component {
         if (type === 'register') {
           this.setState({
             formChoice: 'login',
-            login: [...dataToPass]
+            login: [{
+              email: dataToPass[0].email,
+              password: dataToPass[0].password
+            }],
+            register: [{
+              name: '',
+              email: '',
+              password: ''
+            }]
           });
           return;
         }

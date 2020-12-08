@@ -3,3 +3,4 @@ export { Spaces } from './Spaces';
 export { Flex } from './Flex';
 export { Displays } from './Displays';
 export { Text } from './Text';
+export { Positions } from './Positions';

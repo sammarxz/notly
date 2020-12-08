@@ -5,7 +5,7 @@ import Root from './Root';
 import Typography from './Typography';
 
 import {
-  Colors, Spaces, Flex, Displays, Text,
+  Colors, Spaces, Flex, Displays, Text, Positions
 } from './Helpers';
 
 const GlobalStyles = createGlobalStyle`
@@ -20,6 +20,7 @@ const GlobalStyles = createGlobalStyle`
   ${Flex}
   ${Displays}
   ${Text}
+  ${Positions}
 `;
 
 export default GlobalStyles;

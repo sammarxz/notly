@@ -5,6 +5,8 @@ import 'react-quill/dist/quill.snow.css';
 
 import { Wrapper } from './styles';
 
+import { mobileCheck } from '../../utils/mobileCheck';
+
 const TextEditor = ({note, onUpdateNote}) => { 
   const [currentContent, setCurrentContent] = useState('');
   const [timer, setTimer] = useState(null);
@@ -13,16 +15,30 @@ const TextEditor = ({note, onUpdateNote}) => {
     setCurrentContent(note.body);
   }, [note]);
 
-  const modules = {
-    toolbar: [
-      [
-        { 'header': '1' }, { 'header': '2' },
-      ],
-      ['bold', 'italic', 'blockquote', 'code-block'],
-      [{'list': 'ordered'}, {'list': 'bullet'}],
-      ['link', 'image'],
-      ['clean'],
-    ]
+  let modules;
+
+  if (mobileCheck()) {
+    modules = {
+      toolbar: [
+        [
+          { 'header': '1' }, { 'header': '2' },
+        ],
+        ['bold', 'italic'],
+        [{'list': 'ordered'}, {'list': 'bullet'}],
+      ]
+    }
+  } else {
+    modules = {
+      toolbar: [
+        [
+          { 'header': '1' }, { 'header': '2' },
+        ],
+        ['bold', 'italic', 'blockquote', 'code-block'],
+        [{'list': 'ordered'}, {'list': 'bullet'}],
+        ['link', 'image'],
+        ['clean'],
+      ]
+    }
   }
 
   const updateNote = (content) => {
