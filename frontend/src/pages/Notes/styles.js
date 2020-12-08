@@ -25,7 +25,7 @@ const TextEditorWrapper = styled.div`
     flex: 1;
     min-height: 80vh;
     margin-top: 40px;
-    margin-left: 60px;
+    margin-left: 430px;
   }
 `;
 

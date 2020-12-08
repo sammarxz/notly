@@ -57,17 +57,22 @@ router.get('/', withAuth, async(req, res) => {
 });
 
 router.put('/:id', withAuth, async(req, res) => {
-  const { title, body } = req.body;
   const { id } = req.params;
+  const { title, body } = req.body;
 
   try {
     const note = await Note.findById(id);
 
     if (isOwner(req.user, note)) {
-      const updatedNote = await Note.findOneAndUpdate(id, 
-        { $set: { title, body } },
-        { upsert: true, "new": true }
-      );
+      const updatedNote = await Note.findOneAndUpdate({_id: note._id}, {
+        $set: {
+          title,
+          body
+        }
+      }, {
+        returnOriginal:false,
+        upsert: true
+      });
 
       res.json(updatedNote);
     } else {
