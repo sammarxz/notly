@@ -87,12 +87,12 @@ const TextEditorWrapper = styled.div`
 `;
 
 const DeleteNoteWrapper = styled.div`
-  top: 8px;
-  right: 18px;
-  display: none;
+  top: 12px;
+  right: 12px;
 
   @media (min-width: 676px) {
-    display: block;
+    top: 9px;
+    right: 18px;
   }
 `;
 
