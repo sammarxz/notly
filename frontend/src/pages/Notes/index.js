@@ -35,6 +35,10 @@ class Notes extends Component {
         notes: response.data.reverse(),
         currentNote: response.data[0]
       });
+    } else {
+      this.setState({
+        notes: []
+      });
     }
   }
 
@@ -49,10 +53,21 @@ class Notes extends Component {
     });
   }
 
-  createNote = async() => {
+  createNote = async () => {
     await NotesServices.create();
     this.fetchNotes();
-  } 
+  }
+
+  deleteNote = async () => {
+    const { currentNote } = this.state;
+    await NotesServices.delete(currentNote._id);
+    this.fetchNotes();
+    /*
+      TODO
+      wait 5 seconds before deleting the fact note and 
+      showing the message to the user to undo the action.
+    */
+  }
 
   logOut = async () => {
     await UsersService.logout();
