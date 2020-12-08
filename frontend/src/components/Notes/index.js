@@ -4,7 +4,7 @@ import Moment from 'moment';
 
 import { ListNotes, Note } from './styles'; 
 
-const Notes = ({ notes, currentNote, selectNote }) => (
+const Notes = ({ notes, currentNote, onSelectNote }) => (
   <ListNotes>
     {notes.length > 0 ? (
       <>
@@ -12,7 +12,7 @@ const Notes = ({ notes, currentNote, selectNote }) => (
           <Note 
             key={note._id} 
             className={`pt--16 pb--16 pl--16 pr--16 ${note === currentNote && 'bg--grey-02'} mb--16`}
-            onClick={() => selectNote(note._id)}
+            onClick={() => onSelectNote(note._id)}
           >
             <h2 className="fs--medium mb--4">
               {note.title.replace(/(<([^>]+)>)/ig, '').substring(0, 15)}
@@ -38,7 +38,7 @@ const Notes = ({ notes, currentNote, selectNote }) => (
 Notes.propTypes = {
   notes: PropTypes.arrayOf(PropTypes.object).isRequired,
   currentNote: PropTypes.object.isRequired,
-  selectNote: PropTypes.func.isRequired
+  onSelectNote: PropTypes.func.isRequired
 };
 
 export { Notes };

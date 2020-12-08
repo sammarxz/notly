@@ -74,6 +74,20 @@ class Notes extends Component {
     */
   }
 
+  updateNote = async (oldNote, params) => {
+    const { notes } = this.state;
+
+    const updatedNote = await NotesServices.update(oldNote._id, params);
+    const index = notes.indexOf(oldNote);
+    const newNotes = notes;
+
+    newNotes[index] = updatedNote.data;
+    this.setState({
+      notes: newNotes,
+      currentNote: updatedNote.data
+    });
+  }
+
   logOut = async () => {
     await UsersService.logout();
     this.setState({
@@ -93,10 +107,10 @@ class Notes extends Component {
         <Nav user={user} onLogout={this.logOut} onCreateNote={this.createNote} />
         <NotesWrapper>
           <SearchNote className="mb--32" />
-          <N notes={notes} currentNote={currentNote} selectNote={this.selectNote} />
+          <N notes={notes} currentNote={currentNote} onSelectNote={this.selectNote} />
         </NotesWrapper>
         <TextEditorWrapper>
-          <TextEditor note={currentNote} />
+          <TextEditor note={currentNote} onUpdateNote={this.updateNote} />
         </TextEditorWrapper>
       </Container>
     )
