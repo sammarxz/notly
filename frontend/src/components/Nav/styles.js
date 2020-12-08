@@ -5,6 +5,7 @@ const Navbar = styled.nav`
   position: fixed;
   top: 0;
   bottom: 0;
+  flex: 1;
 
   @media (min-width: 676px) {
     padding: 40px 0;

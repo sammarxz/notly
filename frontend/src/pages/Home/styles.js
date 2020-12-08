@@ -30,7 +30,7 @@ const Hero = styled.div`
 
 const Intro = styled.div`
   h1 {
-    font-size: 36px;
+    font-size: 40px;
     line-height: 1.2;
   }
 

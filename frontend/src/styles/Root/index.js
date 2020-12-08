@@ -3,7 +3,7 @@ import { css } from 'styled-components';
 const Root = css`
   :root {
     --font-size-base: 16px;
-    --font-family-pŕimary: 'Inter', sans-serif;
+    --font-family-primary: 'Inter', serif;
     --font-line-height-base: 1.5;
 
     --color-blue-01: #f1f7fe;

@@ -9,7 +9,7 @@ const Spaces = css`
     padding: 0;
   }
 
-  ${[0, 8, 16, 24, 32, 40, 48].map((size) => css`
+  ${[0, 4, 8, 16, 24, 32, 40, 48].map((size) => css`
     ${['top', 'right', 'bottom', 'left'].map((dir) => css`
       .m${dir[0]}--${size}{
         margin-${dir}: ${size}px;

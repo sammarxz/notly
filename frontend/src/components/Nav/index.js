@@ -15,7 +15,7 @@ const Nav = ({user: {email}, onLogout}) => {
         <Link to="/notes">
           <img src={Logo} alt="Logo Notly.co" className="logo" />
         </Link>
-        <button className="mt--24">
+        <button className="mt--32">
           <RiAddFill size="32px" className="c--blue-04" />
         </button>
       </div>

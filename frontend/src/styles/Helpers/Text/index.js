@@ -1,6 +1,22 @@
 import {css} from 'styled-components';
 
 const Text = css`
+  .fs--small {
+    font-size: .8rem;
+  }
+
+  .fs--normal {
+    font-size: 1rem;
+  }
+
+  .fs--medium {
+    font-size: 1.2rem;
+  }
+
+  .fs--big {
+    font-size: 1.4rem;
+  }
+
   .tt--uppercase {
     text-transform: uppercase;
   }

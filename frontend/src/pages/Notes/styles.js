@@ -6,4 +6,15 @@ const Container = styled.main`
   margin: 0 auto;
 `;
 
-export { Container };
+const NotesWrapper = styled.div`
+  margin-left: 60px;
+  margin-top: 20px;
+
+  @media (min-width: 676px) {
+    margin-left: 90px;
+    margin-top: 40px;
+    max-width: 300px;
+  }
+`;
+
+export { Container, NotesWrapper };
