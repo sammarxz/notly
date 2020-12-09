@@ -40,14 +40,14 @@ class Input extends Component {
     if (!showPassword) {
       return (
         <button type="button" onClick={this.toggleShowPassword}>
-          <FiEye className="c--grey-03"/>
+          <FiEye className="c--grey-05"/>
         </button>
       );
     }
 
     return (
       <button type="button" onClick={this.toggleShowPassword}>
-        <FiEyeOff className="c--grey-03" />
+        <FiEyeOff className="c--grey-05" />
       </button>
     );
   }

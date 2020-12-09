@@ -6,7 +6,14 @@ import { getUser } from '../../services/auth';
 import UsersService from '../../services/users';
 import NotesServices from '../../services/notes';
 
-import { Container, NotesWrapper, TextEditorWrapper, DeleteNoteWrapper } from './styles';
+import { Alert } from '../../components';
+
+import { 
+  Container, 
+  NotesWrapper, 
+  TextEditorWrapper, 
+  DeleteNoteWrapper 
+} from './styles';
 
 import { 
   Nav,
@@ -28,6 +35,9 @@ class Notes extends Component {
         id: ''
       },
       showNotes: false,
+      alert: false,
+      deletedNote: {},
+      timer: null
     }
   }
 
@@ -70,14 +80,35 @@ class Notes extends Component {
   }
 
   deleteNote = async () => {
-    const { currentNote } = this.state;
-    await NotesServices.delete(currentNote._id);
-    this.fetchNotes();
-    /*
-      TODO
-      wait 5 seconds before deleting the fact note and 
-      showing the message to the user to undo the action.
-    */
+    const { notes, currentNote } = this.state;
+    const index = notes.indexOf(currentNote);
+
+    this.setState((prevState) => ({
+      notes: prevState.notes.filter( note => note._id !== currentNote._id),
+      deletedNote: currentNote,
+      currentNote: prevState.notes[index + 1],
+      alert: {
+        message: 'Note successfully deleted'
+      },
+      timer: setTimeout(async () => {
+        this.setState({
+          alert: false,
+        });
+        await NotesServices.delete(currentNote._id);
+        this.fetchNotes();
+      }, 3000)
+    }));
+  }
+
+  undoDelete = () => {
+    const { deletedNote, timer } = this.state;
+
+    this.setState((prevState) => ({
+      notes: prevState.notes.concat(deletedNote),
+      alert: false,
+      deletedNote: {},
+      timer: clearTimeout(timer)
+    }));
   }
 
   updateNote = async (oldNote, params) => {
@@ -108,7 +139,9 @@ class Notes extends Component {
   }
 
   render() {
-    const { user, logout, notes, currentNote, showNotes } = this.state;
+    const { 
+      user, logout, notes, currentNote, showNotes, alert
+    } = this.state;
 
     if (logout) {
       return <Redirect to={{ pathname: '/' }} />
@@ -116,6 +149,11 @@ class Notes extends Component {
 
     return (
       <Container>
+        {alert && (
+          <Alert onUndoDelete={this.undoDelete}>
+            {alert.message}
+          </Alert>
+        )}
         <Nav 
           user={user} 
           onLogout={this.logOut} onCreateNote={this.createNote} 

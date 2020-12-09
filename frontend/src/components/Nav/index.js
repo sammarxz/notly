@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 // import Gravatar from 'react-gravatar';
-import { RiLogoutCircleLine, RiAddFill, RiMenuLine, RiCloseFill } from 'react-icons/ri';
+import { RiLogoutCircleLine, RiAddFill, RiMenuLine } from 'react-icons/ri';
 
 import { Navbar } from './styles';
 
