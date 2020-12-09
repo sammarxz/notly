@@ -8,6 +8,9 @@
     "migrate:reset": "cross-env NODE_ENV=test MONGO_URL=mongodb://localhost/anotei_test node ./test/test_migrate.js",
     "pretest": "npm run migrate:reset"
   },
+  "engines": {
+    "node": "14.15.1"
+  },
   "dependencies": {
     "bcrypt": "^5.0.0",
     "cookie-parser": "~1.4.4",
