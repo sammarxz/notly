@@ -35,7 +35,7 @@ const TextEditor = ({note, onUpdateNote}) => {
         ],
         ['bold', 'italic', 'blockquote', 'code-block'],
         [{'list': 'ordered'}, {'list': 'bullet'}],
-        ['link', 'image'],
+        ['link'],
         ['clean'],
       ]
     }
