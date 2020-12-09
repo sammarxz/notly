@@ -64,6 +64,9 @@ class Notes extends Component {
   createNote = async () => {
     await NotesServices.create();
     this.fetchNotes();
+    this.setState({
+      showNotes: false
+    });
   }
 
   deleteNote = async () => {
@@ -126,14 +129,16 @@ class Notes extends Component {
             onSelectNote={this.selectNote}
           />
         </NotesWrapper>
-        <TextEditorWrapper className="p--relative">
-          <TextEditor note={currentNote} onUpdateNote={this.updateNote} />
-          <DeleteNoteWrapper className="p--absolute">
-            <button onClick={this.deleteNote}>
-              <RiDeleteBinLine size="22px" className="c--red" />
-            </button>
-          </DeleteNoteWrapper>
-        </TextEditorWrapper>
+        {notes.length >= 1 && (
+          <TextEditorWrapper className="p--relative">
+            <TextEditor note={currentNote} onUpdateNote={this.updateNote} />
+            <DeleteNoteWrapper className="p--absolute">
+              <button onClick={this.deleteNote}>
+                <RiDeleteBinLine size="22px" className="c--red" />
+              </button>
+            </DeleteNoteWrapper>
+          </TextEditorWrapper>
+        )}
       </Container>
     )
   }
