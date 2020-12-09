@@ -29,7 +29,7 @@ const Notes = ({ notes, currentNote, onSelectNote }) => (
         ))}
       </>
     ) : (
-      <p className="m--0 ta--center c--grey-06">Hey, it looks like you don't have any notes yet. How about creating one now?</p>
+      <p className="m--0 ta--center c--grey-06">No notes found :(</p>
     )}
     
   </ListNotes>

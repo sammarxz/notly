@@ -45,7 +45,13 @@ class Notes extends Component {
     this.fetchNotes();
   }
 
-  async fetchNotes() {
+  componentWillUnmount() {
+    this.setState((prevState) => ({
+      timer: clearTimeout(prevState.timer)
+    }));
+  }
+
+  fetchNotes = async () => {
     const response = await NotesServices.index();
     if (response.data.length >= 1) {
       this.setState({
@@ -138,6 +144,14 @@ class Notes extends Component {
     }));
   }
 
+  searchNote = async (query) => {
+    const response = await NotesServices.search(query);
+    this.setState({
+      notes: response.data,
+      currentNote: response.data[0]
+    });
+  }
+
   render() {
     const { 
       user, logout, notes, currentNote, showNotes, alert
@@ -160,7 +174,11 @@ class Notes extends Component {
           onShowNotes={this.toggleShowNotes}
         />
         <NotesWrapper className={showNotes && 'active'}>
-          <SearchNote className="mb--32" />
+          <SearchNote 
+            className="mb--32" 
+            onSearchNote={this.searchNote}
+            fetchNotes={this.fetchNotes}
+          />
           <N 
             notes={notes} 
             currentNote={currentNote} 
