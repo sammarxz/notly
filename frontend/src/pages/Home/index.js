@@ -20,10 +20,12 @@ import {
 
 import { Input, Button } from '../../components';
 
-import { capitalizeFirstLetter } from '../../utils';
-
 import UsersService from '../../services/users';
 import { isAuthenticated } from '../../services/auth';
+
+import { capitalizeFirstLetter } from '../../utils';
+
+import PrevImage from '../../assets/prev.png';
 
 class Home extends Component {
   constructor(props) {
@@ -242,7 +244,7 @@ class Home extends Component {
           </Header>
         </Container>
         <Container size="large">
-          <PreviewImage src="https://via.placeholder.com/1180x700/3879fa/fff" alt="placeholder" />
+          <PreviewImage src={PrevImage} alt="placeholder" />
         </Container>
         <section className="mt--48">
           <Container>

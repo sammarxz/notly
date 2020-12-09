@@ -18,6 +18,7 @@ const NotesWrapper = styled.div`
   right: 66px;
   bottom: 0;
   padding: 5% 0;
+  overflow-y: auto;
   transform: translateX(-120%);
   z-index: 9;
 
@@ -33,6 +34,7 @@ const NotesWrapper = styled.div`
     margin-left: 90px;
     margin-top: 40px;
     max-width: 300px;
+    max-height: 86vh;
     transform: translateX(0);
   }
 `;
