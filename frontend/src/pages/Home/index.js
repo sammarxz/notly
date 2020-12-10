@@ -146,6 +146,7 @@ class Home extends Component {
             value={field[key]}
             error={error}
             onChange={(id, value) => this.handleChange(id, value, 'login')}
+            onBlur={(id, value) => this.handleChange(id, value, 'register')}
           />
         )))}
         <div className="d--flex ai--center jc--space-between">
@@ -191,6 +192,7 @@ class Home extends Component {
             className="mb--16"
             value={field[key]}
             onChange={(id, value) => this.handleChange(id, value, 'register')}
+            onBlur={(id, value) => this.handleChange(id, value, 'register')}
           />
         )))}
         <div className="d--flex ai--center jc--space-between">
@@ -292,7 +294,8 @@ class Home extends Component {
             <p>notly.co &copy; 2021 - All rights reserved.</p>
             <p>
               Created by
-              <a href="https://sammarxz.com" className="c--blue-04" target="_blank" rel="noreferrer">@sammarxz</a>
+              {' '}
+              <a href="https://github.com/sammarxz" className="c--blue-04" target="_blank" rel="noreferrer">@sammarxz</a>
               .
             </p>
           </Footer>

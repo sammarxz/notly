@@ -28,6 +28,17 @@ class Input extends Component {
     return this.props.onChange(id, value);
   }
 
+  onBlur = (e) => {
+    const { id, locked } = this.props;
+    const { value } = e.target;
+
+    if (!locked) {
+      this.setState({ focussed: false })
+    }
+    
+    return this.props.onBlur(id, value)
+  }
+
   toggleShowPassword = () => {
     this.setState((prevState) => ({
       showPassword: !prevState.showPassword
@@ -68,7 +79,7 @@ class Input extends Component {
           placeholder={label} 
           onChange={this.onChange}
           onFocus={() => !locked && this.setState({ focussed: true })}
-          onBlur={() => !locked && this.setState({ focussed: false })}
+          onBlur={this.onBlur}
         />
         <Label htmlForm={id} className={error && 'error'}>
           {error || label}
@@ -89,6 +100,7 @@ Input.defaultProps = {
   error: '',
   label: '',
   onChange: () => '',
+  onBlur: () => '',
   className: '',
 };
 
@@ -101,6 +113,7 @@ Input.propTypes = {
   error: PropTypes.string,
   label: PropTypes.string,
   onChange: PropTypes.func,
+  onBlur: PropTypes.func,
   className: PropTypes.string,
 };
 
